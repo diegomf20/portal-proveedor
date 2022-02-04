@@ -21,7 +21,9 @@ class DocumentoController extends Controller
         //     $request->search="";
         // }
         $documentos=Documento::select('*',DB::raw("DATE_FORMAT(created_at,'%e/%c/%Y %H:%i') fecha_registro"))
-                                ->where('ruc',$request->ruc)->get();
+                                ->where('ruc',$request->ruc)
+                                ->orderBy('created_at','DESC')
+                                ->get();
         return response()->json($documentos);
     }
 
@@ -32,8 +34,8 @@ class DocumentoController extends Controller
     {   
         $documento=Documento::where('ruc',$request->ruc)
                     ->where('serie',$request->serie)
-                    ->where('numero',$request->numero)
-                    ->where('empresa',$request->empresa)
+                    ->where('numero',(int)$request->numero)
+                    // ->where('empresa',$request->empresa)
                     ->first();
         if ($documento!=null) {
             return response()->json([
@@ -46,7 +48,7 @@ class DocumentoController extends Controller
         $documento->ruc=strtoupper($request->ruc);
         $documento->serie=strtoupper($request->serie);
         $documento->numero=$request->numero;
-        
+        $documento->empresa=$request->empresa;
         
         if ($request->file!=null) {
             $fileName = $request->ruc.' '.$request->serie.'-'.$request->numero.'.'.$request->file->getClientOriginalExtension();

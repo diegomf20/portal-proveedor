@@ -19,6 +19,7 @@ class CreateDocumentoTable extends Migration
             $table->string('serie',5);
             $table->string('numero',12);
             $table->string('empresa',2);
+            $table->date('fecha_emision');
             $table->string('ruta_archivo',200);
             $table->timestamps();
         });

@@ -30,6 +30,8 @@ class DocumentoValidate extends FormRequest
             'ruc' => 'required|max:11',
             'serie' => 'required|max:5',
             'numero' => 'required|max:12',
+            'empresa' => 'required',
+            'file' => 'required',
         ];
     }
     
