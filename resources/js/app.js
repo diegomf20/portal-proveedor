@@ -45,6 +45,7 @@ const routes = [
     // { path: '/planilla', component: require('./view/planilla.vue').default,beforeEnter: auth },
     // { path: '/personal', component: require('./view/personal.vue').default,beforeEnter: auth },
     // { path: '/servicio', component: require('./view/servicio.vue').default,beforeEnter: auth },
+    { path: '/admin/documentos', component: require('./view/admin.documentos.vue').default, beforeEnter: auth},
     { path: '/documentos', component: require('./view/documentos.vue').default, beforeEnter: auth},
     // { path: '/seguimiento-documentario', component: require('./view/seguimiento.documentario.vue').default, beforeEnter: auth},
     { path: '/login', component: require('./view/login.vue').default, meta:{layout: "empty"}},

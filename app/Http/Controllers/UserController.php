@@ -21,7 +21,11 @@ class UserController extends Controller
         if ($request->search==null||$request->search=="null") {
             $request->search="";
         }
-        $Users=User::where(DB::raw('CONCAT(nombre,apellido)'),'like','%'.$request->search.'%')->paginate(8);
+        if ($request->has('all')) {
+            $Users=User::select('ruc','razon_social')->get();
+        }else {
+            $Users=User::where('','like','%'.$request->search.'%')->paginate(8);
+        }
         return response()->json($Users);
     }
 
@@ -83,6 +87,7 @@ class UserController extends Controller
         $listaRutas=[];
         array_push($listaRutas,"/");
         array_push($listaRutas,"/documentos");
+        array_push($listaRutas,"/admin/documentos");
         return response()->json($listaRutas);
     }
 

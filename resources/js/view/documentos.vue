@@ -87,6 +87,7 @@
                                 truncate-length="30"
                                 v-model="documento.file"
                                 :error-messages="error.file"
+                                accept="application/pdf"
                             ></v-file-input>
                         </v-col>
                         <div class="text-right mt-3">
@@ -214,7 +215,8 @@ export default {
                 serie: '',
                 numero: '',
                 ruc: '',
-                file: null
+                file: null,
+                fecha_emision: ''
             }
         },
         guardar(){
@@ -230,6 +232,7 @@ export default {
             formData.append('serie', this.documento.serie);
             formData.append('numero', this.documento.numero);
             formData.append('empresa', this.documento.empresa);
+            formData.append('fecha_emision', this.documento.fecha_emision);
 
 
             axios.post(url_base+'/documento',formData, config)
@@ -243,6 +246,8 @@ export default {
                             buttons: false
                         });
                         this.documento=this.initForm();
+                        this.consulta.ruc=this.cuenta.ruc;
+                        this.documento.ruc=this.cuenta.ruc;
                         this.open_nuevo=false;
                         this.consultar();
                         break;

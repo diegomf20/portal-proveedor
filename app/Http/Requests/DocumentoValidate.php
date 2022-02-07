@@ -6,6 +6,7 @@ use Illuminate\Foundation\Http\FormRequest;
 
 use Illuminate\Contracts\Validation\Validator;
 use Illuminate\Http\Exceptions\HttpResponseException;
+use Carbon\Carbon;
 
 class DocumentoValidate extends FormRequest
 {
@@ -26,12 +27,14 @@ class DocumentoValidate extends FormRequest
      */
     public function rules()
     {
+        // dd(Carbon::now()->addDay()->format('Y-m-d'));
         return [
             'ruc' => 'required|max:11',
             'serie' => 'required|max:5',
             'numero' => 'required|max:12',
             'empresa' => 'required',
-            'file' => 'required',
+            'file' => 'required|mimes:pdf',
+            'fecha_emision' => 'required|before:'.Carbon::now()->addDay()->format('Y-m-d')
         ];
     }
     
