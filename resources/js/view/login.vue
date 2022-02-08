@@ -66,14 +66,13 @@ export default {
                         //     title: respuesta.data,
                         //     type: 'warn'
                         // })
+                        swal({
+                            title: respuesta.data,
+                            icon: "error",
+                        });
                         break;
 
                     case "OK":
-                        // this.$notify({
-                        //     group: 'foo',
-                        //     title: respuesta.data,
-                        //     type: 'success'
-                        // })
                         this.$store.commit('auth_success', respuesta.data);
                         this.$router.push({path: "/"} );
                         break;

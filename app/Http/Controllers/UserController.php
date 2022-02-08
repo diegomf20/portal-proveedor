@@ -84,10 +84,21 @@ class UserController extends Controller
 
     public function rutas(Request $request){
         $ruc=$request->ruc;
+        $User=User::where('ruc',$ruc)->first();
         $listaRutas=[];
         array_push($listaRutas,"/");
-        array_push($listaRutas,"/documentos");
-        array_push($listaRutas,"/admin/documentos");
+        
+        switch ($User->tipo) {
+            case 'P':
+                array_push($listaRutas,"/documentos");
+                break;
+            case 'A':
+                array_push($listaRutas,"/admin/documentos");
+                break;
+
+            default:
+                break;
+        }
         return response()->json($listaRutas);
     }
 

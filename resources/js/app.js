@@ -18,7 +18,7 @@ import swal from 'sweetalert';
 // window.moment = require('moment');
 
 function rutas(){
-  return axios.get(url_base+'/rutas?usuario='+store.state.cuenta.usuario).then(res=>res.data).catch(res=>res);
+  return axios.get(url_base+'/rutas?ruc='+store.state.cuenta.ruc).then(res=>res.data).catch(res=>res);
 }
 
 var auth=async (to, from,next)=>{

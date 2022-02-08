@@ -86,7 +86,15 @@
                         <i class="far fa-building"></i>
                     </v-list-item-icon>
                     <v-list-item-content>
-                        Documentos
+                        Mis Comprobantes
+                    </v-list-item-content>
+                </v-list-item>
+                <v-list-item v-if="existe('/admin/documentos')" link to="/admin/documentos">
+                    <v-list-item-icon>
+                        <i class="far fa-building"></i>
+                    </v-list-item-icon>
+                    <v-list-item-content>
+                        Lista de Comporbantes
                     </v-list-item-content>
                 </v-list-item>
                 <v-list-item v-if="existe('/seguimiento-documentario')" link to="/seguimiento-documentario">

@@ -19,6 +19,7 @@ class CreateUsersTable extends Migration
             $table->string('razon_social',150);
             $table->string('email')->unique();
             $table->string('password');
+            $table->string('tipo',1)->default('P');
             $table->timestamps();
         });
     }
