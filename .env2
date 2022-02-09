@@ -12,8 +12,8 @@ DB_CONNECTION=mysql
 DB_HOST=p3nlmysql149plsk.secureserver.net
 DB_PORT=3306
 DB_DATABASE=db_proveedor
-DB_USERNAME=root
-DB_PASSWORD=
+DB_USERNAME=proserla
+DB_PASSWORD=Iqur410#
 
 BROADCAST_DRIVER=log
 CACHE_DRIVER=file
