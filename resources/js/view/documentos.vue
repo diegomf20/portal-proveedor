@@ -97,6 +97,7 @@
                                 @click="open_nuevo=false"
                                 >Cancelar</v-btn>
                             <v-btn 
+                                :loading="espera"
                                 outlined 
                                 color="primary" 
                                 @click="guardar()"
@@ -114,6 +115,7 @@ import { mapState,mapMutations } from 'vuex'
 export default {
     data() {
         return {
+            espera: false,
             documento: this.initForm(),
             error:{
 
@@ -142,9 +144,6 @@ export default {
                 item: '',
                 idrecepcion: '' 
             },
-
-
-
             descriptionLimit: 60,
             entries: [],
             isLoading: false,
@@ -234,7 +233,7 @@ export default {
             formData.append('empresa', this.documento.empresa);
             formData.append('fecha_emision', this.documento.fecha_emision);
 
-
+            this.espera=true;
             axios.post(url_base+'/documento',formData, config)
             .then(response => {
                 var respuesta=response.data;
@@ -261,6 +260,7 @@ export default {
 
                         break;
                 }
+                this.espera=false;
             });
         },
         buscarProveedor(){

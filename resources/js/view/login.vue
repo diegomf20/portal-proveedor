@@ -33,7 +33,7 @@
                       ></v-text-field>
                     </v-col>
                     <v-col cols="12" class="text-right">
-                        <v-btn type="submit" color="primary">Ingresar</v-btn>
+                        <v-btn type="submit" color="primary" :loading="espera">Ingresar</v-btn>
                     </v-col>
                   </v-row>
                 </v-form>
@@ -47,15 +47,17 @@
 export default {
     data() {
         return {
-            cuenta: {
-                usuario: '',
-                password: '',
-                empresa: '01'
-            }
+          espera: false,
+          cuenta: {
+            usuario: '',
+            password: '',
+            empresa: '01'
+          }
         }
     },
     methods: {
         ingresar(){
+          this.espera=true;
             axios.post(url_base+'/login',this.cuenta)
             .then(response => {
                 var respuesta=response.data;
@@ -80,6 +82,7 @@ export default {
                     default:
                         break;
                 }
+                this.espera=false;
             });
         }
     },
