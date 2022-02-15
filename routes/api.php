@@ -31,17 +31,25 @@ Route::get('prueba', function () {
     foreach ($Documentos as $key => $documento) {
         $data=null;
         try {
-            $data = json_decode(file_get_contents('http://127.0.0.1:8000/api/SeguimientoDocumentario/status?empresa='.$documento->empresa.'&ruc='.$documento->ruc.'&serie='.$documento->serie.'&numero='.$documento->numero.''), true);
-            // dd($data);
-        } catch (Exception $ex) {
-            echo $ex->getMessage();
-        }
-        if ($data!=null) {
-            $documento->fecha_recepcion=$data["fecha_recepcion"];
-            $documento->fecha_pago=$data["fecha_pago"];
-            $documento->save();
-            echo '<br>Datos Actualizados';
-            // dd($documento,$data);
+
+            $ch = curl_init();
+            curl_setopt($ch, CURLOPT_URL, 'http://190.116.184.195:9083/api/SeguimientoDocumentario/status?empresa='.$documento->empresa.'&ruc='.$documento->ruc.'&serie='.$documento->serie.'&numero='.$documento->numero.''); 
+            curl_setopt($ch, CURLOPT_RETURNTRANSFER, true); 
+            curl_setopt($ch, CURLOPT_HEADER, 0); 
+            $data = curl_exec($ch); 
+            $httpcode = curl_getinfo($ch, CURLINFO_HTTP_CODE);
+            curl_close($ch);
+            if ($httpcode==200) {
+                if ($data!=null) {
+                    $documento->fecha_recepcion=$data["fecha_recepcion"];
+                    $documento->fecha_pago=$data["fecha_pago"];
+                    $documento->save();
+                    echo '<br>Datos Actualizados';
+                    // dd($documento,$data);
+                }
+            } 
+        } catch (\Exception $ex) {
+            echo 'holas: '.$ex->getMessage();
         }
     }
 });

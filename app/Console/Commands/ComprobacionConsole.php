@@ -47,8 +47,8 @@ class ComprobacionConsole extends Command
             try {
                 $data = json_decode(file_get_contents('http://190.116.184.195:9083/api/SeguimientoDocumentario/status?empresa='.$documento->empresa.'&ruc='.$documento->ruc.'&serie='.$documento->serie.'&numero='.$documento->numero.''), true);
                 // dd($data);
-            } catch (Exception $ex) {
-                echo $ex->getMessage();
+            } catch (\Exception $ex) {
+                echo 'holas: '.$ex->getMessage();
             }
             if ($data!=null) {
                 $documento->fecha_recepcion=$data["fecha_recepcion"];
