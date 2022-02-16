@@ -17,21 +17,17 @@ class DocumentoController extends Controller
      */
     public function index(Request $request)
     {
-        // if ($request->search==null||$request->search=="null") {
-        //     $request->search="";
-        // }
-        // if ( $request->ruc!=null) {
-        //     $documentos=Documento::select('*',DB::raw("DATE_FORMAT(created_at,'%e/%c/%Y %H:%i') fecha_registro"))
-        //                             ->where('ruc',$request->ruc)
-        //                             ->orderBy('created_at','DESC')
-        //                             ->get();
-        // }else{
-        $documentos=Documento::select('documento.*','users.razon_social',DB::raw("DATE_FORMAT(documento.created_at,'%e/%c/%Y %H:%i') fecha_registro"))
-                            ->join('users','users.ruc','=','documento.ruc')
-                            ->where('users.ruc','like',$request->ruc.'%')
-                            ->orderBy('documento.created_at','DESC')
-                            ->get();
-        // }
+        $documentos=Documento::select('documento.*',
+                                            'users.razon_social',
+                                            DB::raw("DATE_FORMAT(documento.fecha_emision,'%e/%c/%Y') fecha_emision"),
+                                            DB::raw("DATE_FORMAT(documento.created_at,'%e/%c/%Y %H:%i') fecha_registro"),
+                                            DB::raw("DATE_FORMAT(documento.fecha_recepcion,'%e/%c/%Y') fecha_recepcion"),
+                                            DB::raw("DATE_FORMAT(documento.fecha_pago,'%e/%c/%Y') fecha_pago")
+                                )
+                                ->join('users','users.ruc','=','documento.ruc')
+                                ->where('users.ruc','like',$request->ruc.'%')
+                                ->orderBy('documento.created_at','DESC')
+                                ->get();
         return response()->json($documentos);
     }
 
@@ -58,6 +54,8 @@ class DocumentoController extends Controller
         $documento->numero=$request->numero;
         $documento->empresa=$request->empresa;
         $documento->fecha_emision=$request->fecha_emision;
+        $documento->monto=$request->monto;
+        $documento->moneda=$request->moneda;
         
         if ($request->file!=null) {
             $fileName = $request->ruc.' '.$request->serie.'-'.$request->numero.'.'.$request->file->getClientOriginalExtension();
@@ -83,5 +81,19 @@ class DocumentoController extends Controller
     {
         $User=User::where('id',$id)->first();
         return response()->json($User);
+    }
+
+    public function pendientes(Request $request){
+        $documentos = Documento::whereNull('fecha_recepcion')
+                            ->orWhereNull('fecha_pago')
+                            ->get();
+        return response()->json($documentos);
+    }
+
+    public function update(Request $request,$id){
+        $documento = Documento::where('id',$id)->first();
+        $documento->fecha_pago=$request->fecha_pago;
+        $documento->fecha_recepcion=$request->fecha_recepcion;
+        $documento->save();
     }
 }

@@ -1,7 +1,6 @@
 <template>
-    <container>
-        <v-btn @click="prueba">a</v-btn>
-    </container>
+    <v-container>
+    </v-container>
 </template>
 <script>
 export default {

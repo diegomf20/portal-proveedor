@@ -76,7 +76,11 @@ export default {
                 { text: 'Fecha Emisión', value: 'fecha_emision' },
                 { text: 'Serie', value: 'serie' },
                 { text: 'Número', value: 'numero'},
+                { text: 'Moneda', value: 'moneda' },
+                { text: 'Monto', value: 'monto' },
                 { text: 'Empresa', value: 'empresa' },
+                { text: 'Fecha Recepcion', value: 'fecha_recepcion' },
+                { text: 'Fecha Pago', value: 'fecha_pago' },
                 { text: 'PDF', value: 'ruta' }
 
             ],

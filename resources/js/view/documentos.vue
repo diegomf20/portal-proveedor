@@ -34,7 +34,7 @@
         </v-card>
         <v-dialog v-model="open_nuevo" persistent max-width="350">
             <v-card>
-                <v-card-title class="headline">Nuevo Cliente</v-card-title>
+                <v-card-title class="headline">Nuevo Comprobante</v-card-title>
                 <v-card-text>
                     <v-row>
                         <v-col cols="12">
@@ -76,6 +76,32 @@
                                 v-model="documento.fecha_emision"
                                 type="date"
                                 :error-messages="error.fecha_emision"
+                                >
+                            </v-text-field>
+                        </v-col>
+                        <v-col cols="6">
+                            <v-select
+                                prepend-icon="mdi-domain"
+                                outlined
+                                dense
+                                label="Moneda:"
+                                v-model="documento.moneda"
+                                :items="[
+                                    {moneda: 'Soles'},
+                                    {moneda: 'Dolares'}
+                                ]"
+                                item-text="moneda"
+                                item-value="moneda"
+                                :hide-details='true'
+                                :error-messages="error.moneda">
+                            </v-select>
+                        </v-col>
+                        <v-col cols="6">
+                            <v-text-field
+                                label="Monto:"
+                                v-model="documento.monto"
+                                type="text"
+                                :error-messages="error.monto"
                                 >
                             </v-text-field>
                         </v-col>
@@ -136,7 +162,11 @@ export default {
                 { text: 'Fecha Emisión', value: 'fecha_emision' },
                 { text: 'Serie', value: 'serie' },
                 { text: 'Número', value: 'numero'},
+                { text: 'Moneda', value: 'moneda' },
+                { text: 'Monto', value: 'monto' },
                 { text: 'Empresa', value: 'empresa' },
+                { text: 'Fecha Recepcion', value: 'fecha_recepcion' },
+                { text: 'Fecha Pago', value: 'fecha_pago' },
                 { text: 'PDF', value: 'ruta' }
 
             ],
@@ -215,7 +245,8 @@ export default {
                 numero: '',
                 ruc: '',
                 file: null,
-                fecha_emision: ''
+                fecha_emision: '',
+                moneda: 'Soles'
             }
         },
         guardar(){
@@ -231,7 +262,9 @@ export default {
             formData.append('serie', this.documento.serie);
             formData.append('numero', this.documento.numero);
             formData.append('empresa', this.documento.empresa);
-            formData.append('fecha_emision', this.documento.fecha_emision);
+            formData.append('fecha_emision', this.documento.fecha_emision); 
+            formData.append('moneda', this.documento.moneda); 
+            formData.append('monto', this.documento.monto); 
 
             this.espera=true;
             axios.post(url_base+'/documento',formData, config)
