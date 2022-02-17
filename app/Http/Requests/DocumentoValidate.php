@@ -35,7 +35,7 @@ class DocumentoValidate extends FormRequest
             'empresa' => 'required',
             'file' => 'required|mimes:pdf',
             'fecha_emision' => 'required|before:'.Carbon::now()->addDay()->format('Y-m-d'),
-            'monto' => 'required',
+            'monto' => 'required|numeric|min:1',
             'moneda' => 'required|max:10',
         ];
     }
